@@ -1,19 +1,13 @@
 package main
 
 import (
-	"net/http"
+	"fmt"
 
-	"github.com/gin-gonic/gin"
+	"github.com/dougmendes/advg/cmd/api/config"
 )
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", pong)
-	r.Run()
-}
-
-func pong(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "pong",
-	})
+	fmt.Println("initializing...")
+	server := config.NewServer()
+	server.Run()
 }
