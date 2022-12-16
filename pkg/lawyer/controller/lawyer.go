@@ -3,50 +3,44 @@ package controller
 import (
 	"net/http"
 
+	"github.com/dougmendes/advg/pkg/lawyer/model"
+	"github.com/dougmendes/advg/pkg/lawyer/repository"
+	"github.com/dougmendes/advg/pkg/lawyer/service"
+	"github.com/dougmendes/advg/pkg/response"
 	"github.com/gin-gonic/gin"
 )
 
-type lawyer struct {
-	name           string `json:"name"`
-	lastName       string `json:"last_name"`
-	oab            string `json:"oab"`
-	tel            string `json:"tel"`
-	profilePicture string `json:"profile_picture"`
-	password       string `json:"password"`
-}
-
-func NewLawyer() *LawyerController {
-	return &LawyerController{}
+func NewController(s model.Service) *LawyerController {
+	return &LawyerController{
+		service: s,
+	}
 }
 
 type LawyerController struct {
+	service model.Service
 }
 
 func LawyerRoutes(group *gin.RouterGroup) {
-	lawyerRouterGroup := group.Group("/")
-	lwy := NewLawyer()
+	lawyerGroup := group.Group("/lawyer")
 	{
-		lawyerRouterGroup.GET("lawyer", lwy.GetLawyer())
+		lawyerRepo := repository.NewRepository()
+		lawyerService := service.NewService(lawyerRepo)
+		l := NewController(lawyerService)
+
+		lawyerGroup.GET("/:id", l.getLawyerById())
 	}
 }
 
-func (lwy *LawyerController) GetLawyer() gin.HandlerFunc {
-	lawyer := lawyer{
-		name:           "Douglas",
-		lastName:       "Mendes",
-		oab:            "1111111",
-		tel:            "(31)99999999",
-		profilePicture: "http://adsadasdsa.com",
-		password:       "Xsdffqeqw",
-	}
+func (lwy *LawyerController) getLawyerById() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"name":            lawyer.name,
-			"last_name":       lawyer.lastName,
-			"oab":             lawyer.oab,
-			"tel":             lawyer.tel,
-			"profile_picture": lawyer.profilePicture,
-			"password":        lawyer.password,
-		})
+		id := ctx.Param("id")
+		lawyer, err := lwy.service.GetLawyerById(ctx, id)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{
+
+				"error": err.Error(),
+			})
+		}
+		ctx.JSON(http.StatusOK, response.NewResponse(lawyer))
 	}
 }
