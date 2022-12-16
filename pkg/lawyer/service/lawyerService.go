@@ -16,7 +16,7 @@ func NewService(r model.Repository) model.Service {
 	}
 }
 
-func (s service) GetLawyerById(ctx context.Context, id string) (*model.Lawyer, error) {
+func (s service) GetLawyerById(ctx context.Context, id int) (*model.Lawyer, error) {
 	emp, err := s.repository.GetById(ctx, id)
 	if err != nil {
 		return nil, err

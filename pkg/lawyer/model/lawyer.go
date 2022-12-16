@@ -3,15 +3,15 @@ package model
 import "context"
 
 type Repository interface {
-	GetById(ctx context.Context, id string) (*Lawyer, error)
+	GetById(ctx context.Context, id int) (*Lawyer, error)
 }
 
 type Service interface {
-	GetLawyerById(ctx context.Context, id string) (*Lawyer, error)
+	GetLawyerById(ctx context.Context, id int) (*Lawyer, error)
 }
 
 type Lawyer struct {
-	Id             string `json:"id"`
+	Id             int    `json:"id"`
 	Name           string `json:"name"`
 	LastName       string `json:"last_name"`
 	Resume         string `json:"resume"`

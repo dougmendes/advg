@@ -2,7 +2,9 @@ package controller
 
 import (
 	"net/http"
+	"strconv"
 
+	"github.com/dougmendes/advg/connections"
 	"github.com/dougmendes/advg/pkg/lawyer/model"
 	"github.com/dougmendes/advg/pkg/lawyer/repository"
 	"github.com/dougmendes/advg/pkg/lawyer/service"
@@ -23,7 +25,7 @@ type LawyerController struct {
 func LawyerRoutes(group *gin.RouterGroup) {
 	lawyerGroup := group.Group("/lawyer")
 	{
-		lawyerRepo := repository.NewRepository()
+		lawyerRepo := repository.NewRepository(connections.NewConnection())
 		lawyerService := service.NewService(lawyerRepo)
 		l := NewController(lawyerService)
 
@@ -33,8 +35,9 @@ func LawyerRoutes(group *gin.RouterGroup) {
 
 func (lwy *LawyerController) getLawyerById() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		id := ctx.Param("id")
-		lawyer, err := lwy.service.GetLawyerById(ctx, id)
+		idStr := ctx.Param("id")
+		id, _ := strconv.ParseInt(idStr, 10, 0)
+		lawyer, err := lwy.service.GetLawyerById(ctx, int(id))
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{
 
