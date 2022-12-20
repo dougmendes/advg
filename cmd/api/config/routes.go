@@ -7,7 +7,7 @@ import (
 
 func ConfigurationRoutes(router *gin.Engine) *gin.Engine {
 
-	baseUrl := router.Group("/advg/v1/")
+	baseUrl := router.Group("/api/v1/")
 	{
 		LawyerRoutes(baseUrl)
 

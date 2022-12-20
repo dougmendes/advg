@@ -1,0 +1,8 @@
+mode: set
+github.com/dougmendes/advg/pkg/lawyer/controller/lawyer.go:12.61,16.2 1 1
+github.com/dougmendes/advg/pkg/lawyer/controller/lawyer.go:22.62,23.32 1 1
+github.com/dougmendes/advg/pkg/lawyer/controller/lawyer.go:23.32,27.17 4 1
+github.com/dougmendes/advg/pkg/lawyer/controller/lawyer.go:30.3,30.59 1 1
+github.com/dougmendes/advg/pkg/lawyer/controller/lawyer.go:27.17,29.4 1 1
+github.com/dougmendes/advg/pkg/lawyer/controller/route.go:10.43,12.2 2 0
+github.com/dougmendes/advg/pkg/lawyer/controller/route.go:12.2,18.3 4 0

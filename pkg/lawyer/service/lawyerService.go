@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	err "github.com/dougmendes/advg/pkg/errs"
 	"github.com/dougmendes/advg/pkg/lawyer/model"
 )
 
@@ -16,7 +17,7 @@ func NewService(r model.Repository) model.Service {
 	}
 }
 
-func (s service) GetLawyerById(ctx context.Context, id int) (*model.Lawyer, error) {
+func (s service) GetLawyerById(ctx context.Context, id int) (*model.Lawyer, *err.Error) {
 	emp, err := s.repository.GetById(ctx, id)
 	if err != nil {
 		return nil, err

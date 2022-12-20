@@ -1,14 +1,17 @@
 package response
 
-type Response struct {
-	Data  interface{} `json:"data,omitempty"`
-	Error string      `json:"error,omitempty"`
+type SuccessResponse struct {
+	Lawyer interface{} `json:"lawyer,omitempty"`
 }
 
-func NewResponse(data interface{}) Response {
-	return Response{data, ""}
+type ErrorResponse struct {
+	Error interface{} `json:"error, omitempty"`
 }
 
-func DecodeError(err string) Response {
-	return Response{nil, err}
+func LaweryResponse(lawyer interface{}) SuccessResponse {
+	return SuccessResponse{lawyer}
+}
+
+func DecodeError(err interface{}) ErrorResponse {
+	return ErrorResponse{err}
 }

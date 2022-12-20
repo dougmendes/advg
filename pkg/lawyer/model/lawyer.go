@@ -1,13 +1,17 @@
 package model
 
-import "context"
+import (
+	"context"
+
+	err "github.com/dougmendes/advg/pkg/errs"
+)
 
 type Repository interface {
-	GetById(ctx context.Context, id int) (*Lawyer, error)
+	GetById(ctx context.Context, id int) (*Lawyer, *err.Error)
 }
 
 type Service interface {
-	GetLawyerById(ctx context.Context, id int) (*Lawyer, error)
+	GetLawyerById(ctx context.Context, id int) (*Lawyer, *err.Error)
 }
 
 type Lawyer struct {
@@ -18,5 +22,4 @@ type Lawyer struct {
 	Oab            string `json:"oab"`
 	Tel            string `json:"tel"`
 	ProfilePicture string `json:"profile_picture"`
-	Password       string `json:"password"`
 }
